@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recommind"
+version = "1.0.0"
+description = "RecomMind: a recommendation engine built from scratch (collaborative filtering, no black boxes)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Parth", email = "parthmanchanda987@gmail.com" }]
+dependencies = [
+    "numpy==1.26.4",
+    "matplotlib==3.6.3",
+]
+
+[project.scripts]
+recommend = "recommind.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["recommind*"]
