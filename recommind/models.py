@@ -182,6 +182,8 @@ def recommend(model, user_id: int, train: np.ndarray, n: int = 5):
     Returns a list of ``(item_id, predicted_rating)`` sorted best-first.
     Unknown users fall back to the model's popularity predictions.
     """
+    if n < 0:
+        raise ValueError(f"n must be a non-negative integer, got {n!r}")
     train = np.asarray(train, dtype=float)
     n_items = train.shape[1]
     seen = set()

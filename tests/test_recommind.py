@@ -122,6 +122,13 @@ def test_recommend_returns_n_items_excluding_seen(small_data):
     assert scores == sorted(scores, reverse=True)
 
 
+def test_recommend_rejects_negative_n(small_data):
+    _, train, _ = small_data
+    model = ItemBasedCF().fit(train)
+    with pytest.raises(ValueError, match="non-negative.*-1"):
+        recommend(model, 3, train, n=-1)
+
+
 def test_recommend_excludes_seen_for_user_cf(small_data):
     _, train, _ = small_data
     model = UserBasedCF().fit(train)
