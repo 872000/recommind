@@ -106,6 +106,14 @@ def test_cold_start_unknown_user_falls_back_to_popularity(small_data):
         assert model.predict(unknown, 0) == pytest.approx(base.predict(unknown, 0))
 
 
+def test_user_cf_unknown_item_falls_back_to_popularity(small_data):
+    _, train, _ = small_data
+    model = UserBasedCF().fit(train)
+    base = PopularityBaseline().fit(train)
+    unknown = train.shape[1] + 100
+    assert model.predict(0, unknown) == pytest.approx(base.predict(0, unknown))
+
+
 def test_recommend_returns_n_items_excluding_seen(small_data):
     _, train, _ = small_data
     model = ItemBasedCF().fit(train)

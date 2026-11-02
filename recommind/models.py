@@ -82,7 +82,10 @@ class UserBasedCF:
         return _clip(self.global_mean)
 
     def predict(self, user_id: int, item_id: int) -> float:
-        if not (0 <= user_id < self.n_users) or np.isnan(self.user_means[user_id]):
+        if (not (0 <= user_id < self.n_users)
+                or not (0 <= item_id < self.n_items)
+                or np.isnan(self.user_means[user_id])):
+            # Unknown user or item falls back to popularity, like ItemBasedCF.
             return self._cold_start(user_id, item_id)
 
         rated_by = np.nonzero(~np.isnan(self.train[:, item_id]))[0]
